@@ -1,12 +1,16 @@
 package domain.bean;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
 
-
+@Entity
 public class PizzaConfig implements Serializable{
     
+    @Id
+    private String id;
     private double basePrice;
     private OptionSet options[];
 
@@ -18,6 +22,16 @@ public class PizzaConfig implements Serializable{
     public double getBasePrice() {
         return basePrice;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
