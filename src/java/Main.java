@@ -1,36 +1,40 @@
 
+import decorators.Pepperoni;
+import domain.bean.Option;
 import domain.bean.OptionSet;
 import domain.bean.PizzaConfig;
 import domain.enums.Size;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 
 public class Main {
     
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
         
         OptionSet set = new OptionSet("All Options",11);
         
         //creating Option Objects
-        OptionSet.Option [] option = new OptionSet.Option[11];
-        option[0] = set.new Option("Green Olives",1000);
-        option[1] = set.new Option("Pepperoni",800);
-        option[2] = set.new Option("Onion", 200);
-        option[3] = set.new Option("Beef", 500);
-        option[4] = set.new Option("Anchovy", 900);
-        option[5] = set.new Option("Ham", 800);
-        option[6] = set.new Option("Chicken", 700);
-        option[7] = set.new Option("Mushroom", 400);
-        option[8] = set.new Option("Black Olive", 1000);
-        option[9] = set.new Option("Pineapple", 600);
-        option[10] = set.new Option("Tomato", 200);
+        Option [] option = new Option[11];
+        option[0] = new Option("Green Olives",1000);
+        option[1] = new Option("Pepperoni",800);
+        option[2] = new Option("Onion", 200);
+        option[3] = new Option("Beef", 500);
+        option[4] = new Option("Anchovy", 900);
+        option[5] = new Option("Ham", 800);
+        option[6] = new Option("Chicken", 700);
+        option[7] = new Option("Mushroom", 400);
+        option[8] = new Option("Black Olive", 1000);
+        option[9] = new Option("Pineapple", 600);
+        option[10] = new Option("Tomato", 200);
         
         //initializing serialzed objects files for Options (Toppings)
-        for(OptionSet.Option o: option){
+        for(Option o: option){
             File file = new File(".\\"+o.getName()+".txt");
             FileOutputStream fileOut = new FileOutputStream(file);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -45,7 +49,7 @@ public class Main {
         //PEPPERONI PIZZA WITH 2 TOPPINGS
         
         //TOPPINGS
-        OptionSet.Option [] PepOptions = new OptionSet.Option[2];
+        Option [] PepOptions = new Option[2];
         PepOptions[0] = option[1];
         PepOptions[1] = option[2];
         //SMALL
@@ -66,7 +70,7 @@ public class Main {
         //EPIC VEGGIE WITH 4 TOPPINGS
         
         //TOPPINGS
-        OptionSet.Option [] veggieOptions = new OptionSet.Option[4];
+        Option [] veggieOptions = new Option[4];
         veggieOptions[0] = option[0];
         veggieOptions[1] = option[7];
         veggieOptions[2] = option[9];
@@ -108,6 +112,32 @@ public class Main {
         out.close();
         fileOut.close();
         
+    File pizzaFile = new File(".\\Pepperoni Pizza LARGE.txt");
+    if(pizzaFile.exists()){
+        FileInputStream fileIn = new FileInputStream(".\\Pepperoni Pizza LARGE.txt");
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        
+        OptionSet pizza = (OptionSet) in.readObject();
+        //printing options in pepperoni pizza before decorating the pizza object with extra pepproni
+        Option[] before = pizza.getChoices();
+        System.out.println("Options before decorating the pizza object with extra pepproni:");
+        for(int i=0; i<before.length; i++){
+            System.out.println(before[i].getName());
+        }
+        
+        //Applying pepperoni decorator
+        pizza = new Pepperoni("",3,pizza);
+        
+        //printing options in pepperoni pizza before decorating the pizza object with extra pepproni
+        Option[] after = pizza.getChoices();
+        System.out.println("Options after decorating the pizza object with extra pepproni:");
+        for(int i=0; i<after.length; i++){
+            System.out.println(after[i].getName());
+        }
+        
+        in.close();
+        fileIn.close();
     }
-    
+    }
+
 }

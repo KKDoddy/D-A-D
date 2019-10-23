@@ -15,7 +15,7 @@ public class OptionSet implements Serializable{
     private Option choices[];
     private Size size;
     private double price;
-
+    
     public OptionSet(String name, int numberOfChoices) {
         this.name = name;
         this.choices = new Option[numberOfChoices];
@@ -48,7 +48,7 @@ public class OptionSet implements Serializable{
         return choices;
     }
 
-    public void setChoices(Option[] choices) {
+    public void setChoices(Option [] choices) {
         for(int i=0; i < choices.length; i++){
             if(choices[i] != null){
                 this.choices[i] = choices[i];
@@ -93,45 +93,12 @@ public class OptionSet implements Serializable{
     
     
     //inner Option class as required
-    @Entity
-    public class Option implements Serializable{
-        
-        private String id;
-        private String name;
-        private double price;
+    //got removed
 
-        public Option(String name, double price) {
-            this.name = name;
-            this.price = price;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-        
-        
-
-        public void setPrice(double price) {
-            this.price = price;
-        }
-        
+    //toString
+    @Override
+    public String toString() {
+        return "OptionSet{" + "id=" + id + ", name=" + name + ", choices=" + choices + ", size=" + size + ", price=" + price + '}';
     }
+    
 }
-
-
