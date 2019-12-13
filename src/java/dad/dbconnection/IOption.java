@@ -30,5 +30,33 @@ public class IOption implements Option {
         return null;
     }
 
+    @Override
+    public Option getOptionByName(String name) throws SQLException {
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM "+ TABLE_NAME +" WHERE name='" + name + "'");
+        if(rs.next()) {
+            Option option = new Option(rs.getInt("id"),rs.getString("name"), rs.getDouble("price"));
+            return option;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Option> getAllOptions() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + TABLE_NAME);
+            List<Option> options = new ArrayList<>();
+            while(rs.next()) {
+                Option option = new Option(rs.getInt("id"),rs.getString("name"), rs.getDouble("price"));
+                options.add(option);
+            }
+            return options;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     
 }
