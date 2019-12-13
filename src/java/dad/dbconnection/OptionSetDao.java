@@ -1,6 +1,6 @@
 package dad.dbconnection;
 
-import dad.model.OptionSet;
+import models.OptionSet;
 
 import java.util.List;
 

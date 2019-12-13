@@ -1,6 +1,6 @@
 package dad.dbconnection;
 
-import dad.model.Option;
+import models.Option;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,7 +1,7 @@
 package dad.dbconnection;
 
-import dao.connectionfactory.ConnectionFactory;
-import dad.model.OptionSet;
+import dad.connectionfactory.ConnectionFactory;
+import models.OptionSet;
 
 import java.sql.*;
 import java.util.ArrayList;
