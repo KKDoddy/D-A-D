@@ -11,5 +11,42 @@ public class IOptionSet implements OptionSet {
     private static final String TABLE_NAME= "optionset";
     private Connection connection;
 
+    public IOptionSet() {
+        connection = ConnectionFactory.getConnection();
+    }
+
+    @Override
+    public OptionSet getOptionSet(int id) {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM "+ TABLE_NAME +" WHERE id=" + id);
+            if(rs.next()) {
+                OptionSet optionset = new OptionSet(rs.getInt("id"),rs.getString("name"));
+                return optionset;
+            }
+            return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<OptionSet> getAllOptionSets() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + TABLE_NAME);
+            List<OptionSet> optionSets = new ArrayList<>();
+            while(rs.next()) {
+                OptionSet optionSet = new OptionSet(rs.getInt("id"),rs.getString("name"));
+                optionSets.add(optionSet);
+            }
+            return optionSets;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     
 }
