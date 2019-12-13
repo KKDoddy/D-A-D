@@ -48,5 +48,18 @@ public class IOptionSet implements OptionSet {
         }
     }
 
-    
+    @Override
+    public boolean insertOptionSet(OptionSet optionSet) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO "+ TABLE_NAME +" VALUES (NULL, ?)");
+
+            ps.setString(1, optionSet.getName());
+            int i = ps.executeUpdate();
+
+            return i == 1 ? true : false;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
