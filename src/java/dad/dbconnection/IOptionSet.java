@@ -1,6 +1,6 @@
 package dad.dbconnection;
 
-import dao.connectionfactory.ConnectionFactory;
+import dad.connectionfactory.ConnectionFactory;
 import dad.model.OptionSet;
 
 import java.sql.*;
