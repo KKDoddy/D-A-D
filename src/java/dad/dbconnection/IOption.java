@@ -58,5 +58,50 @@ public class IOption implements Option {
         return null;
     }
 
-    
+    @Override
+    public boolean insertOption(Option option) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO "+ TABLE_NAME +" VALUES (NULL, ?, ?)");
+
+            ps.setString(1, option.getName());
+            ps.setDouble(2, option.getPrice());
+
+            int i = ps.executeUpdate();
+
+            return i == 1 ? true : false;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateOption(Option option) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE " + TABLE_NAME +" SET name=?, price=? WHERE id=?");
+
+            ps.setString(1, option.getName());
+            ps.setDouble(2, option.getPrice());
+            ps.setInt(3, option.getId());
+
+            int i = ps.executeUpdate();
+
+            return i == 1 ? true : false;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteOption(int id) {
+        try {
+            Statement stmt = connection.createStatement();
+            int i = stmt.executeUpdate("DELETE FROM " + TABLE_NAME + " WHERE id=" + id);
+            return i == 1 ? true : false;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }
