@@ -2,12 +2,8 @@
 package domain.bean;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
 public class Option implements Serializable{
-        @Id
         private String id;
         private String name;
         private double price;

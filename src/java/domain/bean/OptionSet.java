@@ -2,14 +2,10 @@ package domain.bean;
 
 import domain.enums.Size;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-
-@Entity
 public class OptionSet implements Serializable{
  
-    @Id
+
     private String id;
     private String name;
     private Option choices[];
