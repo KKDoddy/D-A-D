@@ -1,9 +1,9 @@
 package dad.utility;
 
-import dad.model.Option;
-import dad.model.OptionSet;
-import dad.model.PizzaConfig;
-import dad.model.Size;
+import domain.bean.Option;
+import domain.bean.OptionSet;
+import domain.bean.PizzaConfig;
+import domain.enums.Size;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,26 +1,31 @@
 package domain.bean;
 
-import domain.enums.Size;
 import java.io.Serializable;
+import java.util.List;
 
-public class OptionSet implements Serializable{
- 
-
-    private String id;
+public class OptionSet implements Serializable {
+    private int id;
     private String name;
-    private Option choices[];
-    private Size size;
-    private double price;
-    
-    public OptionSet(String name, int numberOfChoices) {
+    private List<Option> choices;
+
+    public OptionSet() {
+    }
+
+    public OptionSet(String name) {
         this.name = name;
-        this.choices = new Option[numberOfChoices];
-        
-        for(Option o: choices){
-            o = new Option("", 0);
-        }
-        this.price = 0;
-        this.size = Size.SMALL;
+    }
+
+    public OptionSet(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,70 +36,11 @@ public class OptionSet implements Serializable{
         this.name = name;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    
-
-    public Option[] getChoices() {
+    public List<Option> getChoices() {
         return choices;
     }
 
-    public void setChoices(Option [] choices) {
-        for(int i=0; i < choices.length; i++){
-            if(choices[i] != null){
-                this.choices[i] = choices[i];
-            }
-        }
-        getPrice();
+    public void setChoices(List<Option> choices) {
+        this.choices = choices;
     }
-
-    public Size getSize() {
-        return size;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-        this.name = this.name + " " + this.size;
-    }
-
-    public double getPrice() {
-        
-        this.price = 0;
-        for (Option choice : choices) {
-            if(choice != null){
-                price += choice.getPrice();
-            }
-        }
-        
-        switch(this.size) {
-            case MEDIUM:
-                price += 2000;
-                break;
-            case LARGE:
-                price += 3500;
-                break;
-        }
-        
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-    
-    
-    //inner Option class as required
-    //got removed
-
-    //toString
-    @Override
-    public String toString() {
-        return "OptionSet{" + "id=" + id + ", name=" + name + ", choices=" + choices + ", size=" + size + ", price=" + price + '}';
-    }
-    
 }
