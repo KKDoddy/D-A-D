@@ -7,11 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IOptionSetDao implements OptionSetDao {
+public class IOptionSet implements OptionSet {
     private static final String TABLE_NAME= "optionset";
     private Connection connection;
 
-    public IOptionSetDao() {
+    public IOptionSet() {
         connection = ConnectionFactory.getConnection();
     }
 
