@@ -1,76 +1,56 @@
 package domain.bean;
 
-import domain.enums.Size;
 import java.io.Serializable;
-import java.util.List;
 
-public class PizzaConfig implements Serializable {
-    private int id;
-    private String name;
-    private List<OptionSet> choice;
+
+public class PizzaConfig implements Serializable{
+    
+    private String id;
     private double basePrice;
-    private double delivery;
-    private Size size;
+    private OptionSet options[];
 
-    public PizzaConfig() {}
-
-    public PizzaConfig(String name, double basePrice, Size size) {
-        this.name = name;
+    public PizzaConfig(double basePrice,int maxOptionSets) {
         this.basePrice = basePrice;
-        this.size = size;
+        this.options = new OptionSet[maxOptionSets];
     }
 
-    public PizzaConfig(String name, List<OptionSet> choice, double basePrice, double delivery, Size size) {
-        this.name = name;
-        this.choice = choice;
-        this.basePrice = basePrice;
-        this.delivery = delivery;
-        this.size = size;
+    public double getBasePrice() {
+        return basePrice;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<OptionSet> getChoice() {
-        return choice;
-    }
-
-    public void setChoice(List<OptionSet> choice) {
-        this.choice = choice;
-    }
-
-    public double getBasePrice() { return basePrice; }
+    
+    
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
 
-    public double getDelivery() {
-        return delivery;
+    public OptionSet[] getOptions() {
+        return options;
     }
 
-    public void setDelivery(double delivery) {
-        this.delivery = delivery;
+    public void setOptions(OptionSet[] options) {
+        for(int i=0; i<options.length; i++){
+            if(options[i]!=null){
+                this.options[i] = options[i];
+            }
+        }
+        setPrices();
     }
-
-    public Size getSize() {
-        return size;
+    
+    public void setPrices(){
+        for(OptionSet set: options){
+            if(set != null){
+                set.setPrice(set.getPrice() + this.basePrice);
+            }
+        }
     }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
+    
 }
