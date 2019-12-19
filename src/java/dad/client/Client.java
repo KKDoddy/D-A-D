@@ -31,6 +31,40 @@ public class Client {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String response = dataInputStream.readUTF();
         System.out.println(response);
+        
+        outputStream = socket.getOutputStream();
+        dataOutputStream = new DataOutputStream(outputStream);
+        dataOutputStream.writeUTF("option<>get<>Tomato");
+        dataOutputStream.flush();
+
+        try{
+            inputStream = socket.getInputStream();
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+
+            Option option = (Option) objectInputStream.readObject();
+            option.setPrice(12300);
+
+            writeOptionToProps(option);
+
+            outputStream = socket.getOutputStream();
+            dataOutputStream = new DataOutputStream(outputStream);
+            dataOutputStream.writeUTF("option<>update");
+            dataOutputStream.flush();
+
+            Properties optionProps = getOption();
+
+            outputStream = socket.getOutputStream();
+            objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(optionProps);
+            objectOutputStream.flush();
+
+        } catch (NullPointerException e){
+            System.out.println(e.getLocalizedMessage());
+        } catch (IOException e){
+            System.out.println(e.getLocalizedMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
 
     }
 
@@ -44,6 +78,31 @@ public class Client {
         props.load(in);
 
         return props;
+    }
+    
+    public static boolean writeOptionToProps(Option option){
+        Properties prop = new Properties();
+        String rootPath = "\\Users\\Kalimba k Doddz\\Documents";
+        String filename = rootPath + "\\option.properties";
+
+        try {
+            InputStream in = new FileInputStream(filename);
+            prop.load(in);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        //Setting the value to  our properties file.
+        prop.setProperty("Id", Integer.toString(option.getId()));
+        prop.setProperty("Option", option.getName());
+        prop.setProperty("Price", Double.toString(option.getPrice()));
+
+        try {
+            prop.store(new FileOutputStream(filename), null);
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        return false;
     }
 
 }
