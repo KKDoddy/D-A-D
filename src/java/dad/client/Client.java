@@ -5,6 +5,8 @@ import models.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Client {
@@ -15,7 +17,7 @@ public class Client {
         Socket socket = new Socket("localhost", 1900);
         System.out.println("Connected!");
 
-//save Option
+//saving Option
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         dataOutputStream.writeUTF("option<>save");
@@ -65,6 +67,20 @@ public class Client {
         } catch (ClassNotFoundException e) {
             System.out.println(e.getLocalizedMessage());
         }
+        
+    //  Saving a Pizza Config
+        List<Option> options = new ArrayList<>();
+        Option option = new Option("Option 1",  1200);
+        options.add(option);
+
+        List<OptionSet> optionSets = new ArrayList<>();
+        OptionSet optionSet = new OptionSet();
+        optionSet.setName("test");
+        optionSet.setChoices(options);
+        optionSets.add(optionSet);
+
+        PizzaConfig pizzaConfig= new PizzaConfig("Test", optionSets,2300,2300, Size.L);
+
 
     }
 
